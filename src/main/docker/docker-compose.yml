@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    postgres:
+        image: postgres
+        volumes:
+            # chmod 644 init_postgres.sql ;)
+            - ./init_postgres.sql:/docker-entrypoint-initdb.d/init_postgres.sql
+        environment:
+            POSTGRES_DB: root
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+        ports: 
+            - "54320:5432"
+    pgadmin-compose:
+        image: dpage/pgadmin4
+        environment: 
+            PGADMIN_DEFAULT_EMAIL: pgadmin@hex46.fr
+            PGADMIN_DEFAULT_PASSWORD: pgadmin
+        ports: 
+            - "8081:80"
+        depends_on: 
+            - postgres  
